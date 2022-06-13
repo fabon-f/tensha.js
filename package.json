@@ -3,9 +3,18 @@
   "version": "0.1.0",
   "description": "Transliteration from foreign languages to Japanese",
   "type": "module",
+  "types": "./lib/index.d.ts",
   "exports": {
-    ".": "./lib/index.js",
-    "./languages": "./lib/languages/index.js"
+    ".": {
+      "import": {
+        "types": "./lib/index.d.ts",
+        "default": "./lib/index.js"
+      }
+    },
+    "./languages": {
+      "types": "./lib/languages/index.d.ts",
+      "default": "./lib/languages/index.js"
+    }
   },
   "engines": {
     "node": ">=14.15"
