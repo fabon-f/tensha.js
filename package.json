@@ -1,0 +1,30 @@
+{
+  "name": "tensha",
+  "version": "0.1.0",
+  "description": "Transliteration from foreign languages to Japanese",
+  "type": "module",
+  "exports": {
+    ".": "./lib/index.js",
+    "./languages": "./lib/languages/index.js"
+  },
+  "engines": {
+    "node": ">=14.15"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabon-f/tensha.js.git"
+  },
+  "keywords": [],
+  "author": "fabon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fabon-f/tensha.js/issues"
+  },
+  "homepage": "https://github.com/fabon-f/tensha.js#readme",
+  "devDependencies": {
+    "typescript": "^4.7.3"
+  }
+}
