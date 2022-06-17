@@ -65,7 +65,7 @@ function convertWord(str: string) {
         }
 
         if (!map[str[i]]) { throw new Error(); }
-        if (str[i] === "в" && (str[i + 1] === "с" || str[i + 1] === "к" || i + 1 === str.length)) {
+        if (str[i] === "в" && ("ксц".includes(str[i + 1]) || i + 1 === str.length)) {
             out += "フ";
             i++;
             continue;
