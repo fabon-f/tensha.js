@@ -25,7 +25,8 @@
   },
   "scripts": {
     "test": "ava src",
-    "build": "rimraf lib '*.tsbuildinfo' && tsc"
+    "build": "rimraf lib '*.tsbuildinfo' && tsc",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
