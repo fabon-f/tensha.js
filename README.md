@@ -1,4 +1,4 @@
-# tensha.js
+# tensha.js [![NPM version][npm-image]][npm-url] ![main workflow](https://github.com/fabon-f/tensha.js/actions/workflows/main.yml/badge.svg)
 
 Transliteration library from foreign languages to Japanese. It supports currently Russian.
 
