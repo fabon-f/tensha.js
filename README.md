@@ -2,6 +2,12 @@
 
 Transliteration library from foreign languages to Japanese. It supports currently Russian.
 
+## Installation
+
+```
+npm install tensha
+```
+
 ## Usage
 
 This package is ESM only. Please use `import` instead of `require`.
