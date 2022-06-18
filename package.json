@@ -20,7 +20,8 @@
     "node": ">=14.15"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava src",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,15 @@
   },
   "homepage": "https://github.com/fabon-f/tensha.js#readme",
   "devDependencies": {
+    "@types/node": "^18.0.0",
+    "ava": "^4.3.0",
+    "ts-node": "^10.8.1",
     "typescript": "^4.7.3"
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "nodeArguments": ["--loader=ts-node/esm"]
   }
 }
