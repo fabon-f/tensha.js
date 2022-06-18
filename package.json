@@ -1,7 +1,7 @@
 {
   "name": "tensha",
   "version": "0.1.0",
-  "description": "Transliteration from foreign languages to Japanese",
+  "description": "Transliteration library from foreign languages to Japanese",
   "type": "module",
   "types": "./lib/index.d.ts",
   "exports": {
