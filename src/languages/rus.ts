@@ -28,6 +28,17 @@ const map = {
 } as { [key: string]: string };
 
 function convertWord(str: string) {
+    if (/гра\u0301?д/.test(str)) {
+        const prefix = str.replace(/гра\u0301?д$/, "");
+        if (!prefix.includes("\u0301")) {
+            return transliterateCharacters(prefix) + "グラード";
+        }
+    }
+
+    return transliterateCharacters(str);
+}
+
+function transliterateCharacters(str: string) {
     let out = "";
     for (let i = 0; i < str.length; ) {
         if (str[i] === "\u0301") {

@@ -41,3 +41,8 @@ test("invalid characters", t => {
     const e = t.throws(() => translit("d"));
     t.is(e?.message?.startsWith("Invalid character:"), true);
 });
+
+test("suffix '-град'", t => {
+    t.is(translit("Ленинград"), "レニングラード");
+    t.is(translit("Волгогра́д"), "ヴォルゴグラード");
+});
