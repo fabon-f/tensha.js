@@ -28,6 +28,12 @@ test("consonant 'тс' and 'дс'", t => {
     t.is(translit("Петрозаводск"), "ペトロザヴォツク");
 })
 
+test("consonant 'дз' and 'дж'", t => {
+    t.is(translit("Биробиджан"), "ビロビジャン");
+    t.is(translit("Геленджик"), "ゲレンジク");
+    t.is(translit("Орджоники́дзе", { reflectAccent: true }), "オルジョニキーゼ");
+});
+
 test("'ий'", t => {
     t.is(translit("Ха́нты-Манси\u0301йск"), "ハンティ・マンシースク");
     t.is(translit("Достоевский"), "ドストエフスキー");
