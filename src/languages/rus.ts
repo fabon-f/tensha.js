@@ -27,21 +27,44 @@ const map = {
     "бый": "ブイ", "вый": "ヴイ", "дый": "ドゥイ", "зый": "ズイ", "лый": "ルイ", "мый": "ムイ", "ный": "ヌイ", "пый": "プイ", "рый": "ルイ", "сый": "スイ", "тый": "トゥイ"
 } as { [key: string]: string };
 
-function convertWord(str: string) {
+export type RussianTransliterationOptions = {
+    reflectAccent?: boolean;
+};
+
+function insertAccent(str: string) {
+    if (str.includes("\u0301")) { return str; }
+    if (str.includes("ё")) {
+        return str.replace("ё", "ё\u0301");
+    }
+    if ((str.match(/[аяиыуюэеоё]/g) || []).length === 1) {
+        return str.replace(/[аяиыуюэеоё]/, match => match + "\u0301");
+    }
+
+    return str;
+}
+
+function convertWord(str: string, opts: Required<RussianTransliterationOptions>) {
     if (/гра\u0301?д/.test(str)) {
         const prefix = str.replace(/гра\u0301?д$/, "");
         if (!prefix.includes("\u0301")) {
-            return transliterateCharacters(prefix) + "グラード";
+            return transliterateCharacters(prefix, opts) + "グラード";
         }
     }
 
-    return transliterateCharacters(str);
+    if (opts.reflectAccent) {
+        str = insertAccent(str);
+    }
+
+    return transliterateCharacters(str, opts);
 }
 
-function transliterateCharacters(str: string) {
+function transliterateCharacters(str: string, opts: Required<RussianTransliterationOptions>) {
     let out = "";
     for (let i = 0; i < str.length; ) {
         if (str[i] === "\u0301") {
+            if (opts.reflectAccent) {
+                out += "ー";
+            }
             i++;
             continue;
         }
@@ -88,7 +111,12 @@ function transliterateCharacters(str: string) {
     return out;
 }
 
-export default function transliterateRussian(str: string) {
+export default function transliterateRussian(str: string, opts: RussianTransliterationOptions = {}) {
+    const options = Object.assign({
+        // default options
+        reflectAccent: false
+    }, opts);
+
     const reform1918 = buildCharacterMap("ѢѣѲѳІі", "ЕеФфИи");
     const largeToSmall = buildCharacterMap("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ", "абвгдеёжзийклмнопрстуфхцчшщъыьэюя");
     str = str.replace(/[ѢѣѲѳІі]/g, s => reform1918[s]).replace(/[АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ]/g, s => largeToSmall[s]);
@@ -96,5 +124,5 @@ export default function transliterateRussian(str: string) {
     const invalidCharMatch = str.match(/[^абвгдеёжзийклмнопрстуфхцчшщъыьэюя\- \u{0301}]/u);
     if (invalidCharMatch) { throw new Error(`Invalid character: ${invalidCharMatch[0]}`); }
 
-    return str.split(/[- ]/).map(convertWord).join("・");
+    return str.split(/[- ]/).map(str => convertWord(str, options)).join("・");
 }

@@ -46,3 +46,18 @@ test("suffix '-град'", t => {
     t.is(translit("Ленинград"), "レニングラード");
     t.is(translit("Волгогра́д"), "ヴォルゴグラード");
 });
+
+test("'reflectAccent' option", t => {
+    const opts = { reflectAccent: true };
+    t.is(translit("Ирку\u0301тск", opts), "イルクーツク");
+    t.is(translit("Орёл", opts), "オリョール");
+    t.is(translit("Братск", opts), "ブラーツク");
+    t.is(translit("Ленинград", opts), "レニングラード");
+    t.is(translit("Балти\u0301йск", opts), "バルチースク");
+
+    // can't detect where the accent falls
+    t.is(translit("Новосибирск", opts), "ノヴォシビルスク");
+
+    t.is(translit("трёхме\u0301рный", opts), "トリョフメールヌイ");
+    t.is(translit("Сёгу\u0301н", opts), "ショグーン");
+});
