@@ -3,6 +3,7 @@ import translit from "./rus.js";
 
 test("basic transliteration", t => {
     t.is(translit("Полтава"), "ポルタヴァ");
+    t.is(translit("Йошка́р-Ола́"), "ヨシカル・オラ");
 });
 
 test("devoicing of letter 'в'", t => {
