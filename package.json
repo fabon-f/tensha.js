@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Transliteration library from foreign languages to Japanese",
   "type": "module",
+  "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "exports": {
     ".": {
