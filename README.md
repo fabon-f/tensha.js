@@ -24,5 +24,7 @@ transliterateRu("Антон"); // "アントン"
 
 ```ts
 // import library with type definitions using skypack
-import { transliterate, transliterateRu } from "https://cdn.skypack.dev/tensha@0.1.0?dts";
+import { transliterate, transliterateRu } from "https://cdn.skypack.dev/tensha@0.1.1?dts";
+// or ESM
+import { transliterate, transliterateRu } from "https://esm.sh/tensha@0.1.1";
 ```
