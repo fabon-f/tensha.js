@@ -13,8 +13,10 @@
       }
     },
     "./languages": {
-      "types": "./lib/languages/index.d.ts",
-      "default": "./lib/languages/index.js"
+      "import": {
+        "types": "./lib/languages/index.d.ts",
+        "default": "./lib/languages/index.js"
+      }
     }
   },
   "sideEffects": false,
