@@ -4,7 +4,6 @@
     "noEmit": true,
     "module": "Node16",
     "moduleResolution": "Node16",
-    "noUncheckedIndexedAccess": false
   },
   "include": ["src"]
 }

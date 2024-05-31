@@ -64,7 +64,12 @@ function convertWord(str: string, opts: Required<RussianTransliterationOptions>)
 function transliterateCharacters(str: string, opts: Required<RussianTransliterationOptions>) {
     let out = "";
     for (let i = 0; i < str.length; ) {
-        if (str[i] === "\u0301") {
+        const c = str[i];
+        const nextChar = str[i + 1];
+        if (c === undefined) {
+            throw new Error();
+        }
+        if (c === "\u0301") {
             if (opts.reflectAccent) {
                 out += "ー";
             }
@@ -97,13 +102,13 @@ function transliterateCharacters(str: string, opts: Required<RussianTransliterat
             continue;
         }
 
-        if (str[i] === str[i + 1] && !"аеёиоуыэюянм".includes(str[i])) {
+        if (c === str[i + 1] && !"аеёиоуыэюянм".includes(c)) {
             out += "ッ";
             i++;
             continue;
         }
 
-        if (str[i] === "й" && (str[i - 1] === "и" || str.substring(i - 2, i) === "и\u0301") && (i + 1 === str.length || str[i + 1] === "с")) {
+        if (c === "й" && (str[i - 1] === "и" || str.substring(i - 2, i) === "и\u0301") && (i + 1 === str.length || str[i + 1] === "с")) {
             if (!out.endsWith("ー")) {
                 out += "ー";
             }
@@ -111,13 +116,13 @@ function transliterateCharacters(str: string, opts: Required<RussianTransliterat
             continue;
         }
 
-        if (!map[str[i]]) { throw new Error(); }
-        if (str[i] === "в" && ("ксц".includes(str[i + 1]) || i + 1 === str.length)) {
+        if (!map[c]) { throw new Error(); }
+        if (c === "в" && (nextChar === undefined || "ксц".includes(nextChar))) {
             out += "フ";
             i++;
             continue;
         }
-        out += map[str[i]];
+        out += map[c];
         i++;
     }
 
@@ -132,7 +137,7 @@ export default function transliterateRussian(str: string, opts: RussianTranslite
 
     const reform1918 = buildCharacterMap("ѢѣѲѳІі", "ЕеФфИи");
     const largeToSmall = buildCharacterMap("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ", "абвгдеёжзийклмнопрстуфхцчшщъыьэюя");
-    str = str.replace(/[ѢѣѲѳІі]/g, s => reform1918[s]).replace(/[АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ]/g, s => largeToSmall[s]);
+    str = str.replace(/[ѢѣѲѳІі]/g, s => reform1918[s]!).replace(/[АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ]/g, s => largeToSmall[s]!);
 
     const invalidCharMatch = str.match(/[^абвгдеёжзийклмнопрстуфхцчшщъыьэюя\- \u{0301}]/u);
     if (invalidCharMatch) { throw new Error(`Invalid character: ${invalidCharMatch[0]}`); }
