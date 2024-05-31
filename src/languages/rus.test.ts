@@ -1,70 +1,71 @@
-import test from "ava";
+import test from 'node:test';
+import assert from 'node:assert'
+
 import translit from "./rus.js";
 
-test("basic transliteration", t => {
-    t.is(translit("Полтава"), "ポルタヴァ");
-    t.is(translit("Йошка́р-Ола́"), "ヨシカル・オラ");
+test("basic transliteration", () => {
+    assert.strictEqual(translit("Полтава"), "ポルタヴァ");
+    assert.strictEqual(translit("Йошка́р-Ола́"), "ヨシカル・オラ");
 });
 
-test("devoicing of letter 'в'", t => {
-    t.is(translit("Николаев"), "ニコラエフ");
-    t.is(translit("Киев"), "キエフ");
-    t.is(translit("Ижевск"), "イジェフスク");
-    t.is(translit("Ивантеевка"), "イヴァンテエフカ");
-    t.is(translit("Кадыровцы"), "カディロフツィ");
+test("devoicing of letter 'в'", () => {
+    assert.strictEqual(translit("Николаев"), "ニコラエフ");
+    assert.strictEqual(translit("Киев"), "キエフ");
+    assert.strictEqual(translit("Ижевск"), "イジェフスク");
+    assert.strictEqual(translit("Ивантеевка"), "イヴァンテエフカ");
+    assert.strictEqual(translit("Кадыровцы"), "カディロフツィ");
 });
 
-test("successive same consonants", t => {
-    t.is(translit("Спасск-Дальний"), "スパッスク・ダリニー");
-    t.is(translit("Анна"), "アンナ");
+test("successive same consonants", () => {
+    assert.strictEqual(translit("Спасск-Дальний"), "スパッスク・ダリニー");
+    assert.strictEqual(translit("Анна"), "アンナ");
 });
 
-test("suffix '-ый'", t => {
-    t.is(translit("Грозный"), "グロズヌイ");
+test("suffix '-ый'", () => {
+    assert.strictEqual(translit("Грозный"), "グロズヌイ");
 });
 
-test("consonant 'тс' and 'дс'", t => {
-    t.is(translit("Бача́тский"), "バチャツキー");
-    t.is(translit("Петрозаводск"), "ペトロザヴォツク");
+test("consonant 'тс' and 'дс'", () => {
+    assert.strictEqual(translit("Бача́тский"), "バチャツキー");
+    assert.strictEqual(translit("Петрозаводск"), "ペトロザヴォツク");
 })
 
-test("consonant 'дз' and 'дж'", t => {
-    t.is(translit("Биробиджан"), "ビロビジャン");
-    t.is(translit("Геленджик"), "ゲレンジク");
-    t.is(translit("Орджоники́дзе", { reflectAccent: true }), "オルジョニキーゼ");
+test("consonant 'дз' and 'дж'", () => {
+    assert.strictEqual(translit("Биробиджан"), "ビロビジャン");
+    assert.strictEqual(translit("Геленджик"), "ゲレンジク");
+    assert.strictEqual(translit("Орджоники́дзе", { reflectAccent: true }), "オルジョニキーゼ");
 });
 
-test("'ий'", t => {
-    t.is(translit("Ха́нты-Манси\u0301йск"), "ハンティ・マンシースク");
-    t.is(translit("Достоевский"), "ドストエフスキー");
+test("'ий'", () => {
+    assert.strictEqual(translit("Ха́нты-Манси\u0301йск"), "ハンティ・マンシースク");
+    assert.strictEqual(translit("Достоевский"), "ドストエフスキー");
 });
 
-test("compound words", t => {
-    t.is(translit("Кривой Рог"), "クリヴォイ・ログ");
-    t.is(translit("Ростов-на-Дону"), "ロストフ・ナ・ドヌ");
+test("compound words", () => {
+    assert.strictEqual(translit("Кривой Рог"), "クリヴォイ・ログ");
+    assert.strictEqual(translit("Ростов-на-Дону"), "ロストフ・ナ・ドヌ");
 });
 
-test("invalid characters", t => {
-    const e = t.throws(() => translit("d"));
-    t.is(e?.message?.startsWith("Invalid character:"), true);
+test("invalid characters", () => {
+    assert.throws(() => translit("d"), /Invalid character/);
 });
 
-test("suffix '-град'", t => {
-    t.is(translit("Ленинград"), "レニングラード");
-    t.is(translit("Волгогра́д"), "ヴォルゴグラード");
+test("suffix '-град'", () => {
+    assert.strictEqual(translit("Ленинград"), "レニングラード");
+    assert.strictEqual(translit("Волгогра́д"), "ヴォルゴグラード");
 });
 
-test("'reflectAccent' option", t => {
+test("'reflectAccent' option", () => {
     const opts = { reflectAccent: true };
-    t.is(translit("Ирку\u0301тск", opts), "イルクーツク");
-    t.is(translit("Орёл", opts), "オリョール");
-    t.is(translit("Братск", opts), "ブラーツク");
-    t.is(translit("Ленинград", opts), "レニングラード");
-    t.is(translit("Балти\u0301йск", opts), "バルチースク");
+    assert.strictEqual(translit("Ирку\u0301тск", opts), "イルクーツク");
+    assert.strictEqual(translit("Орёл", opts), "オリョール");
+    assert.strictEqual(translit("Братск", opts), "ブラーツク");
+    assert.strictEqual(translit("Ленинград", opts), "レニングラード");
+    assert.strictEqual(translit("Балти\u0301йск", opts), "バルチースク");
 
     // can't detect where the accent falls
-    t.is(translit("Новосибирск", opts), "ノヴォシビルスク");
+    assert.strictEqual(translit("Новосибирск", opts), "ノヴォシビルスク");
 
-    t.is(translit("трёхме\u0301рный", opts), "トリョフメールヌイ");
-    t.is(translit("Сёгу\u0301н", opts), "ショグーン");
+    assert.strictEqual(translit("трёхме\u0301рный", opts), "トリョフメールヌイ");
+    assert.strictEqual(translit("Сёгу\u0301н", opts), "ショグーン");
 });
