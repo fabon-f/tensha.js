@@ -5,7 +5,12 @@ export function buildCharacterMap(beforeChars: string, afterChars: string) {
 
     const map: { [key: string]: string } = {};
     for (let i = 0; i < chars1.length; i++) {
-        map[chars1[i]] = chars2[i];
+        const c1 = chars1[i];
+        const c2 = chars2[i];
+        if (c1 === undefined || c2 === undefined) {
+            throw new Error();
+        }
+        map[c1] = c2;
     }
     return map;
 }
