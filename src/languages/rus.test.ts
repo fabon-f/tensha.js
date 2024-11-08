@@ -5,7 +5,7 @@ import translit from "./rus.js";
 
 test("basic transliteration", () => {
     assert.strictEqual(translit("Полтава"), "ポルタヴァ");
-    assert.strictEqual(translit("Йошка́р-Ола́"), "ヨシカル・オラ");
+    assert.strictEqual(translit("Йошка\u0301р-Ола\u0301"), "ヨシカル・オラ");
 });
 
 test("devoicing of letter 'в'", () => {
@@ -26,18 +26,18 @@ test("suffix '-ый'", () => {
 });
 
 test("consonant 'тс' and 'дс'", () => {
-    assert.strictEqual(translit("Бача́тский"), "バチャツキー");
+    assert.strictEqual(translit("Бача\u0301тский"), "バチャツキー");
     assert.strictEqual(translit("Петрозаводск"), "ペトロザヴォツク");
 })
 
 test("consonant 'дз' and 'дж'", () => {
     assert.strictEqual(translit("Биробиджан"), "ビロビジャン");
     assert.strictEqual(translit("Геленджик"), "ゲレンジク");
-    assert.strictEqual(translit("Орджоники́дзе", { reflectAccent: true }), "オルジョニキーゼ");
+    assert.strictEqual(translit("Орджоники\u0301дзе", { reflectAccent: true }), "オルジョニキーゼ");
 });
 
 test("'ий'", () => {
-    assert.strictEqual(translit("Ха́нты-Манси\u0301йск"), "ハンティ・マンシースク");
+    assert.strictEqual(translit("Ха\u0301нты-Манси\u0301йск"), "ハンティ・マンシースク");
     assert.strictEqual(translit("Достоевский"), "ドストエフスキー");
 });
 
@@ -52,7 +52,7 @@ test("invalid characters", () => {
 
 test("suffix '-град'", () => {
     assert.strictEqual(translit("Ленинград"), "レニングラード");
-    assert.strictEqual(translit("Волгогра́д"), "ヴォルゴグラード");
+    assert.strictEqual(translit("Волгогра\u0301д"), "ヴォルゴグラード");
 });
 
 test("'reflectAccent' option", () => {
