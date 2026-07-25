@@ -28,7 +28,7 @@ test("suffix '-ый'", () => {
 test("consonant 'тс' and 'дс'", () => {
     assert.strictEqual(translit("Бача\u0301тский"), "バチャツキー");
     assert.strictEqual(translit("Петрозаводск"), "ペトロザヴォツク");
-})
+});
 
 test("consonant 'дз' and 'дж'", () => {
     assert.strictEqual(translit("Биробиджан"), "ビロビジャン");
