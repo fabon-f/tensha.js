@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/strictest/tsconfig.json",
   "compilerOptions": {
+    "types": ["node"],
     "noEmit": true,
     "module": "Node16",
     "moduleResolution": "Node16",
