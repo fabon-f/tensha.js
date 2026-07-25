@@ -420,13 +420,9 @@ export default function transliterateRussian(
     );
 
     const reform1918 = buildCharacterMap("ѢѣѲѳІі", "ЕеФфИи");
-    const largeToSmall = buildCharacterMap(
-        "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
-        "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
-    );
     str = str
         .replace(/[ѢѣѲѳІі]/g, (s) => reform1918[s]!)
-        .replace(/[АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ]/g, (s) => largeToSmall[s]!);
+        .replace(/[АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ]/g, (s) => s.toLowerCase());
 
     const invalidCharMatch = str.match(/[^абвгдеёжзийклмнопрстуфхцчшщъыьэюя\- \u{0301}]/u);
     if (invalidCharMatch) {
